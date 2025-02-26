@@ -10,12 +10,18 @@ import AboutPage from 'pages/client/about';
 import LoginPage from 'pages/client/auth/login';
 import RegisterPage from 'pages/client/auth/register';
 import 'styles/globe.scss'
+import HomePage from 'pages/client/home';
+import { App } from 'antd';
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Layout />,
         children: [
+            {
+                index: true,
+                element: <HomePage />
+            },
             {
                 path: "/book",
                 element: <BookPage />,
@@ -38,6 +44,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <RouterProvider router={router} />
+        <App>
+            <RouterProvider router={router} />
+        </App>
     </StrictMode>,
 )
