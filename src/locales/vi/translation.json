@@ -1,0 +1,49 @@
+{
+    "admin": {
+        "dashboard": "Bảng Điều Khiển",
+        "manageUsers": "Quản Lý Tài Khoản",
+        "manageBooks": "Quản Lý Sách",
+        "manageOrders": "Quản Lý Đơn Hàng",
+        "crud": "Tùy Chỉnh",
+        "profile": "Hồ Sơ",
+        "settings": "Cài Dặt",
+        "logout": "Đăng xuất"
+    },
+    "header": {
+        "admin": "Trang quản trị",
+        "profile": "Hồ sơ",
+        "settings": "Cài đặt",
+        "logout": "Đăng xuất",
+        "searchTitle": "Tìm kiếm sản phẩm...",
+        "login": "Đăng nhập",
+        "logoutTitle": "Xác nhận đăng xuất",
+        "logoutText": "Đăng xuất",
+        "logoutCancel": "Hủy",
+        "logoutConfirm": "Bạn có chắc chắn muốn đăng xuất?"
+    },
+    "login": {
+        "successMessage": "Đăng nhập thành công",
+        "errorMessage": "Có lỗi xảy ra",
+        "loginText": "Đăng nhập",
+        "emailTypeMessage": "Email không đúng định dạng",
+        "emailRequiredMessage": "Nhập email của bạn",
+        "passwordLabel": "Mật khẩu",
+        "passwordRequiredMessage": "Nhập mật khẩu của bạn",
+        "loginQuestion": "Chưa có tài khoản? ",
+        "register": "Đăng ký tại đây"
+    },
+    "register": {
+        "successMessage": "Đăng ký user thành công",
+        "registerText": "Đăng Ký",
+        "fullNameLabel": "Họ tên",
+        "fullNameRequiredMessage": "Vui lòng nhập họ tên!",
+        "emailTypeMessage": "Email không hợp lệ!",
+        "emailRequiredMessage": "Vui lòng nhập email!",
+        "passwordLabel": "Mật khẩu",
+        "passwordRequiredMessage": "Vui lòng nhập mật khẩu!",
+        "phoneLabel": "Số điện thoại",
+        "phoneRequiredMessage": "Vui lòng nhập số điện thoại!",
+        "registerQuestion": "Bạn đã có tài khoản? ",
+        "login": "Đăng nhập tại đây"
+    }
+}

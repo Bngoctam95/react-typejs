@@ -1,19 +1,24 @@
 import { loginAPI } from '@/services/api';
-import './login.scss'
 import type { FormProps } from 'antd';
-import { App, Button, Form, Input } from 'antd';
+import { App, Button, Card, Col, Form, Input, Row, Typography } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useCurrentApp } from '@/hooks/useCurrentApp';
+import { useTranslation } from 'react-i18next';
 
 type FieldType = {
     username: string;
     password: string;
 };
 
+const { Title } = Typography;
+
 const LoginPage = () => {
     const { message, notification } = App.useApp();
     const navigate = useNavigate();
-    const [isSubmit, setIsSubmit] = useState(false)
+    const [isSubmit, setIsSubmit] = useState(false);
+    const { setIsAuthenticated, setUser } = useCurrentApp();
+    const { t } = useTranslation();
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         const { username, password } = values;
         setIsSubmit(true);
@@ -21,13 +26,15 @@ const LoginPage = () => {
         setIsSubmit(false);
         if (res?.data) {
             //success
+            setIsAuthenticated(true);
+            setUser(res.data.user);
             localStorage.setItem('access_token', res.data.access_token);
-            message.success("Đăng nhập thành công");
+            message.success(t("login.successMessage"));
             navigate('/');
         } else {
             //error
             notification.error({
-                message: "Có lỗi xảy ra",
+                message: t("login.errorMessage"),
                 description:
                     res.message && Array.isArray(res.message) ? res.message[0] : res.message,
                 duration: 5
@@ -40,12 +47,34 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="login-page">
-            <div className="container">
-                <div className="heading">
-                    Đăng Nhập
-                </div>
-                <div className="login-form">
+        <Row
+            justify="center"
+            align="middle"
+            style={{
+                minHeight: '100vh',
+                padding: '20px',
+                backgroundColor: '#f0f2f5',
+                width: '100%'
+            }}
+        >
+            <Col
+                xs={{ span: 24 }}
+                sm={{ span: 20 }}
+                md={{ span: 16 }}
+                lg={{ span: 12 }}
+                xl={{ span: 10 }}
+                xxl={{ span: 8 }}
+                style={{ maxWidth: '500px' }}
+            >
+                <Card
+                    title={<Title level={2} style={{ textAlign: 'center' }}>{t("login.loginText")}</Title>}
+                    bordered={true}
+                    style={{
+                        borderRadius: '8px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                        border: '1px solid #e8e8e8'
+                    }}
+                >
                     <Form
                         name="basic"
                         onFinish={onFinish}
@@ -59,38 +88,43 @@ const LoginPage = () => {
                             rules={[
                                 {
                                     type: 'email',
-                                    message: 'The input is not valid E-mail!',
+                                    message: t("login.emailTypeMessage"),
                                 },
                                 {
                                     required: true,
-                                    message: 'Please input your E-mail!',
+                                    message: t("login.emailRequiredMessage"),
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input autoComplete='username' />
                         </Form.Item>
 
                         <Form.Item<FieldType>
-                            label="Mật khẩu"
+                            label={t("login.passwordLabel")}
                             name="password"
-                            rules={[{ required: true, message: 'Please input your password!' }]}
+                            rules={[{ required: true, message: t("login.passwordRequiredMessage") }]}
                         >
-                            <Input.Password />
+                            <Input.Password autoComplete='current-password' />
                         </Form.Item>
 
                         <Form.Item label={null}>
                             <Button type="primary" htmlType="submit" loading={isSubmit}>
-                                Đăng nhập
+                                {t("login.loginText")}
                             </Button>
                         </Form.Item>
+
+                        <Typography style={{
+                            textAlign: 'center'
+                        }}>
+                            {t("login.loginQuestion")}
+                            <Link to="/register">
+                                {t("login.register")}
+                            </Link>
+                        </Typography>
                     </Form>
-                </div>
-                <hr />
-                <div className="exist-account">
-                    <span>Chưa có tài khoản?</span> <Link to="/register">Đăng ký</Link>
-                </div>
-            </div>
-        </div>
+                </Card>
+            </Col>
+        </Row>
     )
 }
 

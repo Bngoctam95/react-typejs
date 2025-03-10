@@ -1,9 +1,9 @@
 import { registerAPI } from '@/services/api';
-import './register.scss'
 import type { FormProps } from 'antd';
-import { Button, Form, Input, App } from 'antd';
+import { Button, Form, Input, App, Typography, Card, Row, Col } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type FieldType = {
     fullName: string;
@@ -12,10 +12,13 @@ type FieldType = {
     phone: string;
 };
 
+const { Title } = Typography;
+
 const RegisterPage = () => {
     const { message } = App.useApp();
     const navigate = useNavigate();
-    const [isSubmit, setIsSubmit] = useState(false)
+    const [isSubmit, setIsSubmit] = useState(false);
+    const { t } = useTranslation();
 
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setIsSubmit(true);
@@ -23,7 +26,7 @@ const RegisterPage = () => {
         const res = await registerAPI(fullName, email, password, phone);
         if (res.data) {
             //success
-            message.success("Đăng ký user thành công.");
+            message.success(t("register.successMessage"));
             navigate("/login");
         } else {
             //error
@@ -37,73 +40,95 @@ const RegisterPage = () => {
     };
 
     return (
-        <div className="register-page">
-            <div className="container">
-                <div className="heading">
-                    Đăng Ký Tài Khoản
-                </div>
-                <div className="register-form">
+
+        <Row
+            justify="center"
+            align="middle"
+            style={{
+                minHeight: '100vh',
+                padding: '20px',
+                backgroundColor: '#f0f2f5',
+                width: '100%'
+            }}
+        >
+            <Col
+                xs={{ span: 24 }}
+                sm={{ span: 20 }}
+                md={{ span: 16 }}
+                lg={{ span: 12 }}
+                xl={{ span: 10 }}
+                xxl={{ span: 8 }}
+                style={{ maxWidth: '500px' }}
+            >
+                <Card
+                    title={<Title level={2} style={{ textAlign: 'center' }}>{t("register.registerText")}</Title>}
+                    bordered={true}
+                    style={{
+                        borderRadius: '8px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                        border: '1px solid #e8e8e8'
+                    }}
+                >
                     <Form
                         name="basic"
+                        layout="vertical"
+                        autoComplete="off"
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
-                        autoComplete="off"
-                        layout="vertical"
                     >
                         <Form.Item<FieldType>
-                            label="Họ tên"
+                            label={t("register.fullNameLabel")}
                             name="fullName"
-                            rules={[{ required: true, message: 'Please input your username!' }]}
+                            rules={[{ required: true, message: t("register.fullNameRequiredMessage") }]}
                         >
-                            <Input />
+                            <Input size="large" />
                         </Form.Item>
 
                         <Form.Item<FieldType>
+                            label="Email"
                             name="email"
-                            label="E-mail"
                             rules={[
-                                {
-                                    type: 'email',
-                                    message: 'The input is not valid E-mail!',
-                                },
-                                {
-                                    required: true,
-                                    message: 'Please input your E-mail!',
-                                },
+                                { type: 'email', message: t("register.emailTypeMessage") },
+                                { required: true, message: t("register.emailRequiredMessage") },
                             ]}
                         >
-                            <Input />
+                            <Input size="large" autoComplete='username' />
                         </Form.Item>
 
                         <Form.Item<FieldType>
-                            label="Mật khẩu"
+                            label={t("register.passwordLabel")}
                             name="password"
-                            rules={[{ required: true, message: 'Please input your password!' }]}
+                            rules={[{ required: true, message: t("register.passwordRequiredMessage") }]}
                         >
-                            <Input.Password />
+                            <Input.Password size="large" autoComplete='current-password' />
                         </Form.Item>
 
                         <Form.Item<FieldType>
+                            label={t("register.phoneLabel")}
                             name="phone"
-                            label="Số điện thoại"
-                            rules={[{ required: true, message: 'Please input your phone number!' }]}
+                            rules={[{ required: true, message: t("register.phoneRequiredMessage") }]}
                         >
-                            <Input />
+                            <Input size="large" />
                         </Form.Item>
 
                         <Form.Item label={null}>
                             <Button type="primary" htmlType="submit" loading={isSubmit}>
-                                Đăng ký
+                                {t("register.registerText")}
                             </Button>
                         </Form.Item>
+
+                        <Typography style={{
+                            textAlign: 'center'
+                        }}>
+                            {t("register.registerQuestion")}
+                            <Link to="/login">
+                                {t("register.login")}
+                            </Link>
+                        </Typography>
                     </Form>
-                </div>
-                <hr />
-                <div className="exist-account">
-                    <span>Đã có tài khoản?</span> <Link to="/login">Đăng nhập</Link>
-                </div>
-            </div>
-        </div>
+                </Card>
+            </Col>
+        </Row>
     )
 }
 

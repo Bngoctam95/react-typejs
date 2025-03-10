@@ -1,0 +1,49 @@
+{
+    "admin": {
+        "dashboard": "Dashboard",
+        "manageUsers": "Manage Users",
+        "manageBooks": "Manage Books",
+        "manageOrders": "Manage Orders",
+        "crud": "CRUD",
+        "profile": "Profile",
+        "settings": "Settings",
+        "logout": "Logout"
+    },
+    "header": {
+        "admin": "Administration",
+        "profile": "Profile",
+        "settings": "Settings",
+        "logout": "Logout",
+        "searchTitle": "Search for...",
+        "login": "Login",
+        "logoutTitle": "Confirm logout",
+        "logoutText": "Logout",
+        "logoutCancel": "Cancel",
+        "logoutConfirm": "Are you sure you want to logout?"
+    },
+    "login": {
+        "successMessage": "Sign in successfully",
+        "errorMessage": "Error occurs",
+        "loginText": "Sign In",
+        "emailTypeMessage": "The input is not valid E-mail!",
+        "emailRequiredMessage": "Please input your E-mail!",
+        "passwordLabel": "Password",
+        "passwordRequiredMessage": "Please input your password!",
+        "loginQuestion": "No account? ",
+        "register": "Register here!"
+    },
+    "register": {
+        "successMessage": "Register user successfully!",
+        "registerText": "Register",
+        "fullNameLabel": "Full Name",
+        "fullNameRequiredMessage": "Please input full name!",
+        "emailTypeMessage": "The input is not valid E-mail!",
+        "emailRequiredMessage": "Please input your E-mail!",
+        "passwordLabel": "Password",
+        "passwordRequiredMessage": "Please input your password!",
+        "phoneLabel": "Phone",
+        "phoneRequiredMessage": "Please input your phone!",
+        "registerQuestion": "Have an account? ",
+        "login": "Login here"
+    }
+}

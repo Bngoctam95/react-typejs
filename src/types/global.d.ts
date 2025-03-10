@@ -16,7 +16,7 @@ declare global {
             pages: number;
             total: number;
         },
-        results: T[]
+        result: T[]
     }
 
     interface ILogin {
@@ -35,5 +35,35 @@ declare global {
         _id: string;
         email: string;
         fullName: string;
+    }
+
+    interface IUser {
+        email: string;
+        phone: string;
+        fullName: string;
+        role: string;
+        avatar: string;
+        id: string;
+    }
+
+    interface IFetchAccount {
+        user: IUser
+    }
+
+    interface IUserTable {
+        _id: string;
+        fullName: string;
+        email: string;
+        phone: string;
+        role: string;
+        avatar: string;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+    }
+
+    interface IDeleteUser {
+        acknowledged: boolean,
+        deletedCount: number
     }
 }
