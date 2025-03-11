@@ -43,13 +43,15 @@ const UpdateFormUser = ({ openModalUpdate, setOpenModalUpdate, refreshTable, cur
     }
 
     useEffect(() => {
-        form.setFieldsValue({
-            _id: currentUser?._id,
-            email: currentUser?.email,
-            phone: currentUser?.phone,
-            fullName: currentUser?.fullName
-        });
-    }, [currentUser]);
+        if (currentUser) {
+            form.setFieldsValue({
+                _id: currentUser._id,
+                email: currentUser.email,
+                phone: currentUser.phone,
+                fullName: currentUser.fullName
+            });
+        }
+    }, [currentUser, form]);
 
     return (
         <Modal

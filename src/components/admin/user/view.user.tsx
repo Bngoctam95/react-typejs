@@ -1,5 +1,5 @@
 import { formatDate } from "@/services/helper";
-import { Avatar, Badge, Col, Descriptions, DescriptionsProps, Drawer } from "antd";
+import { Avatar, Badge, Descriptions, DescriptionsProps, Drawer } from "antd";
 
 interface IProps {
     openViewUser: boolean;

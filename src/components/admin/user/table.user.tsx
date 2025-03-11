@@ -1,13 +1,15 @@
 import { deleteUserAPI, getUsersAPI } from '@/services/api';
-import { dateRangeValidate } from '@/services/helper';
-import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
+import { dateRangeValidate, formatDate } from '@/services/helper';
+import { CloudUploadOutlined, DeleteTwoTone, EditTwoTone, ExportOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { App, Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
-import CreateFormUser from './create.user';
-import UpdateFormUser from './update.user';
-import ViewUser from './view.user';
+import CreateFormUser from 'components/admin/user/create.user';
+import UpdateFormUser from 'components/admin/user/update.user';
+import ViewUser from 'components/admin/user/view.user';
+import { CSVLink } from 'react-csv';
+import ImportUser from './import.user';
 
 type TSearch = {
     fullName: string;
@@ -21,8 +23,10 @@ const TableUser = () => {
     const [openModalCreate, setOpenModalCreate] = useState<boolean>(false);
     const [openModalUpdate, setOpenModalUpdate] = useState<boolean>(false);
     const [openViewUser, setOpenViewUser] = useState<boolean>(false);
+    const [openImportUser, setOpenImportUser] = useState<boolean>(false);
     const [currentUser, setCurrentUser] = useState<IUserTable | null>(null);
     const [isDeleteUser, setIsDeleteUser] = useState<boolean>(false);
+    const [currentDataTable, setCurrentDataTable] = useState<IUserTable[]>([]);
     const { message, notification } = App.useApp();
 
     const [meta, setMeta] = useState({
@@ -31,6 +35,13 @@ const TableUser = () => {
         pages: 0,
         total: 0
     });
+
+    const dataExport = currentDataTable.map(({ _id, fullName, email, createdAt }) => ({
+        _id,
+        fullName,
+        email,
+        createdAt: formatDate(createdAt)
+    }));
 
     const refreshTable = () => {
         actionRef.current?.reload();
@@ -180,6 +191,7 @@ const TableUser = () => {
                     const res = await getUsersAPI(query);
                     if (res.data) {
                         setMeta(res.data.meta);
+                        setCurrentDataTable(res.data?.result ?? []);
                     }
                     return {
                         data: res.data?.result,
@@ -204,16 +216,40 @@ const TableUser = () => {
                 }}
                 headerTitle="Table user"
                 toolBarRender={() => [
-                    <Button
-                        key="button"
-                        icon={<PlusOutlined />}
-                        onClick={() => {
-                            handleCreateUser();
-                        }}
-                        type="primary"
-                    >
-                        Add new
-                    </Button>
+                    <>
+                        <Button
+                            key="import-button"
+                            icon={<CloudUploadOutlined />}
+                            onClick={() => {
+                                setOpenImportUser(true);
+                            }}
+                            type="primary"
+                        >
+                            Import
+                        </Button>
+                        <Button
+                            key="export-button"
+                            icon={<ExportOutlined />}
+                            type="primary"
+                        >
+                            <CSVLink
+                                data={dataExport}
+                                filename='export-user'
+                            >
+                                Export
+                            </CSVLink>
+                        </Button>
+                        <Button
+                            key="add-new-button"
+                            icon={<PlusOutlined />}
+                            onClick={() => {
+                                handleCreateUser();
+                            }}
+                            type="primary"
+                        >
+                            Add new
+                        </Button>
+                    </>
                 ]}
             />
             <CreateFormUser
@@ -231,6 +267,11 @@ const TableUser = () => {
                 openViewUser={openViewUser}
                 setOpenViewUser={setOpenViewUser}
                 currentUser={currentUser}
+            />
+            <ImportUser
+                openImportUser={openImportUser}
+                setOpenImportUser={setOpenImportUser}
+                refreshTable={refreshTable}
             />
         </>
     );

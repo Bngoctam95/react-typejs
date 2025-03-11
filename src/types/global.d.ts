@@ -66,4 +66,11 @@ declare global {
         acknowledged: boolean,
         deletedCount: number
     }
+
+    interface IDataImport {
+        fullName: string;
+        email: string;
+        phone: string;
+        password: string;
+    }
 }

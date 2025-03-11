@@ -1,8 +1,7 @@
 import { createUserAPI } from '@/services/api';
-import { UploadOutlined } from '@ant-design/icons';
-import { App, Button, Divider, Form, FormProps, Input, Modal, Upload } from 'antd';
+import { App, Button, Divider, Form, FormProps, Input, Modal } from 'antd';
 import { UploadFile } from 'antd/lib';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface IProps {
     openModalCreate: boolean;
