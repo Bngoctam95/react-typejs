@@ -1,7 +1,10 @@
+import TableBook from "components/admin/book/table.book";
 
 const ManaBookPage = () => {
     return (
-        <div>Manage Books</div>
+        <div style={{ marginTop: 20 }}>
+            <TableBook />
+        </div>
     )
 }
 

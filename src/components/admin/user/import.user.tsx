@@ -61,14 +61,13 @@ const ImportUser = ({ openImportUser, setOpenImportUser, refreshTable }: IProps)
                         sheet.eachRow((row: any, rowNumber: any) => {
                             if (rowNumber == 1) return;
                             let values = row.values;
-                            let obj: any = {};
+                            let obj: any = { key: rowNumber };
                             for (let i = 1; i < keys.length; i++) {
                                 obj[keys[i]] = values[i];
                             }
                             jsonData.push(obj);
                         })
                     });
-                    console.log("check jsonData", jsonData)
                     setDataImport(jsonData);
                 }
             } else if (status === 'error') {
@@ -86,7 +85,6 @@ const ImportUser = ({ openImportUser, setOpenImportUser, refreshTable }: IProps)
             ...user,
             password: "123456"
         }));
-        console.log("check formattedUsers", formattedUsers)
         const res = await ImportUsersAPI(formattedUsers);
         if (res?.data) {
             //success
